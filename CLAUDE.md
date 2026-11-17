@@ -34,8 +34,13 @@ El usuario escribe en español: responde en español, simple y corto.
   `generar-carpeta.ps1`; `update.vbs` → `update.ps1`).
   `launcher/mac/`: `install.sh`, `start.sh`, `stop.sh`, `update.sh`, `generar-carpeta.sh`.
 
+## Seguridad
+- `proxy.ts` bloquea peticiones de otras webs y dominios que no sean 127.0.0.1/localhost. El servidor solo
+  escucha en 127.0.0.1. Repo público: nunca subir rutas reales, nombres de clientes ni el email personal
+  (este repo usa el email noreply de GitHub).
+
 ## Flujo de trabajo
-- Repo único privado: `github.com/victorinvita/previewer` (rama `main`). Lo que se sube sirve para Windows y Mac.
+- Repo único público: `github.com/victorinvita/previewer` (rama `main`). Lo que se sube sirve para Windows y Mac.
 - GitHub Actions (`.github/workflows/build.yml`) compila y ejecuta `scripts/smoke.mjs` en windows-latest
   y macos-latest. `gh` está instalado (`C:/Program Files/GitHub CLI`): ver resultados con `gh run list`.
 - `.gitignore` bloquea videos, fotos y audio: al repo solo va código (más el icono `launcher/previewer.png`).
@@ -45,8 +50,8 @@ El usuario escribe en español: responde en español, simple y corto.
 
 ## Pendiente (a 2026-11-10)
 1. Hecho (2026-11-17): Actions sale verde en Windows y Mac.
-2. Decidir cómo accede al repo la amiga que prueba en Mac: hacerlo público (recomendado, no tiene datos
-   del usuario) o invitarla como colaboradora. Luego preparar una guía paso a paso para ella.
+2. Hecho (2026-11-17): repo público (historial reescrito en un solo commit con el email noreply; el
+   historial viejo queda solo en local, rama `respaldo-antes-de-publicar`: nunca subirla). Falta la guía para la amiga de Mac.
 3. Más adelante: lista de comprobación para la probadora de Mac y una función de diagnóstico en la app.
 4. Ofrecido, sin respuesta: subir `cleanupPeriodDays` en la config de Claude Code para no perder chats,
    y actualizar el acceso directo del escritorio si se renombra la carpeta del proyecto.
