@@ -1,0 +1,31 @@
+# Compila y prueba Previewer en Windows y en Mac cada vez que subes cambios.
+# Si algo se rompe en uno de los dos sistemas, aparece en rojo en la pestaña "Actions" de GitHub.
+name: Build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # ffmpeg incluido con la app (igual que lo instala el instalador de Mac cuando no hay ffmpeg en el sistema).
+      - run: npm install --no-save --no-audit --no-fund ffmpeg-static ffprobe-static
+      - run: npm run build
+      - name: Prueba de humo
+        run: node scripts/smoke.mjs
+      - name: Revisar sintaxis de los scripts de Mac
+        if: runner.os == 'macOS'
+        run: for f in launcher/mac/*.sh; do bash -n "$f" && echo "ok $f"; done

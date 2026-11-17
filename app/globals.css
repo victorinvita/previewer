@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/* Paleta y tipografía tomadas de victorflames.com */
+@theme {
+  --color-cream: #f7f5f3;
+  --color-ink: #14211d;
+  --color-coal: #1a1a1a;
+  --color-accent: #e56b3b;
+  --color-electric: #3b82f6;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  /* Una sola tipografía en toda la app: los títulos y los datos también usan DM Sans. */
+  --font-serif: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-serif { font-weight: 600; letter-spacing: -0.03em; }
+.font-serif em { font-style: normal; }
+.font-mono { font-variant-numeric: tabular-nums; }
+
+:root {
+  --background: #f7f5f3;
+  --foreground: #171717;
+  --ease-vf: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #e56b3b33;
+}
+
+/* ---------- Animaciones (mismas curvas que el sitio) ---------- */
+@keyframes header-drop {
+  0% { opacity: 0; transform: translateY(-28px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.header-drop { animation: 0.8s var(--ease-vf) 50ms both header-drop; }
+
+@keyframes hero-rise {
+  0% { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-rise { animation: 0.85s var(--ease-vf) both hero-rise; }
+.hero-rise-delay-1 { animation-delay: 0.1s; }
+.hero-rise-delay-2 { animation-delay: 0.2s; }
+.hero-rise-delay-3 { animation-delay: 0.3s; }
+
+@keyframes item-fade {
+  0% { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.item-fade { animation: 0.6s var(--ease-vf) both item-fade; }
+
+@keyframes leak-drift {
+  0% { transform: translate(-3%, 2%) rotate(-6deg) scale(1.05); }
+  to { transform: translate(4%, -3%) rotate(-12deg) scale(1.12); }
+}
+.leaks {
+  opacity: 0.55;
+  filter: blur(28px);
+  background: linear-gradient(115deg, #0000 20%, #468cff59 35%, #28d2a04d 45%, #ffc84652 55%, #ff5a3259 65%, #0000 80%);
+  animation: 16s ease-in-out infinite alternate leak-drift;
+}
+
+/* Botón con relleno diagonal al pasar el cursor */
+.diag-fill { position: relative; overflow: hidden; isolation: isolate; }
+.diag-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #fff;
+  clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+  transition: clip-path 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.diag-fill:hover::before,
+.diag-fill:focus-visible::before { clip-path: polygon(100% 100%, -100% 100%, 100% -100%); }
+.diag-fill:hover,
+.diag-fill:focus-visible { color: #1a1a1a; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 1s linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .header-drop, .hero-rise, .item-fade, .leaks { animation: none; }
+  .diag-fill::before { transition: none; }
+}
+
+/* Variante clara: se rellena de tinta al pasar el cursor */
+.diag-fill-dark { position: relative; overflow: hidden; isolation: isolate; }
+.diag-fill-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #14211d;
+  clip-path: polygon(100% 100%, 100% 100%, 100% 100%);
+  transition: clip-path 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.diag-fill-dark:hover::before,
+.diag-fill-dark:focus-visible::before { clip-path: polygon(100% 100%, -100% 100%, 100% -100%); }
+.diag-fill-dark:hover,
+.diag-fill-dark:focus-visible { color: #f7f5f3; }
+@media (prefers-reduced-motion: reduce) { .diag-fill-dark::before { transition: none; } }
+
+@keyframes row-flash {
+  0%, 60% { background: rgba(229, 107, 59, 0.22); }
+  to { background: rgba(229, 107, 59, 0.1); }
+}
+.row-flash { animation: 1.6s ease-out both row-flash; }

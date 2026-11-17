@@ -1,0 +1,47 @@
+node_modules/
+.next/
+next-env.d.ts
+*.tsbuildinfo
+
+# Registros del servidor local
+launcher/*.log
+launcher/*.log.err
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Nunca subir material: videos, fotos, audio ni archivos pesados (solo código)
+*.mp4
+*.mov
+*.mxf
+*.avi
+*.mkv
+*.m4v
+*.braw
+*.r3d
+*.heic
+*.heif
+*.avif
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.tif
+*.tiff
+*.psd
+*.dng
+*.cr2
+*.cr3
+*.arw
+*.nef
+*.wav
+*.mp3
+*.aac
+*.m4a
+*.zip
+*.7z
+# Excepción: el icono del lanzador
+!launcher/previewer.png
